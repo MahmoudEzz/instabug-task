@@ -31,5 +31,16 @@ ActiveRecord::Schema.define(version: 2022_01_21_182226) do
     t.index ["number"], name: "index_chats_on_number", unique: true
   end
 
+  create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
+    t.bigint "chat_id"
+    t.integer "number"
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+    t.index ["number"], name: "index_messages_on_number", unique: true
+  end
+
   add_foreign_key "chats", "applications"
+  add_foreign_key "messages", "chats"
 end

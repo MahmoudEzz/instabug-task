@@ -40,7 +40,7 @@ class ChatsController < ApplicationController
 
   # PATCH/PUT /applications/:application_token/chats/1
   def update
-    puts chat_params[:number]
+    
     if Chat.find_by(number: chat_params[:number])
       render json: {error: "This number already exists"}, status: :unprocessable_entity
       return
