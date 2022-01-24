@@ -17,29 +17,24 @@ class MessagesController < ApplicationController
 
   # POST /applications/:application_token/chats/:chat_number/messages
   def create
-    # Todo -> solve phantom record problem
-    app_messages = Message.where(chat_id: @chat[:id])
-    number = app_messages.length + 1
+    if message_params[:text]
+    max_num = Message.where(chat_id: @chat[:id]).maximum("number")
+    number = max_num ? max_num + 1 : 1
     new_message = {
       chat_id: @chat[:id],
       number: number,
       text: message_params[:text]
     }
-    @message = Message.new(new_message)
-
-    if @message.save
-      @chat.messages_count =+ 1
-      @chat.save
-
-      render json: @message, except: [:id, :chat_id], status: :created
+    MessageJob.perform_async(new_message);
+    render json: new_message, except: [:chat_id], status: :created
     else
-      render json: @message.errors, status: :unprocessable_entity
+      render json: {error: "Failed to create new message"}, status: :unprocessable_entity
     end
+
   end
 
   # PATCH/PUT /applications/:application_token/chats/:chat_number/messages/1
   def update
-    puts "=============IN============="
     if Message.find_by(number: message_params[:number])
       render json: {error: "This number already exists"}, status: :unprocessable_entity
       return
@@ -60,9 +55,11 @@ class MessagesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_application
-      @application = Application.find_by(token: params[:application_token])
-      if !@application
-        render plain: {error: "404 Application Not Found"}, status: 404
+      serialized_app = $redis.get(params[:application_token])
+      if !serialized_app
+        render json: {error: "404 Application Not Found"}, status: 404
+      else
+        @application = JSON.parse(serialized_app, {:symbolize_names => true})
       end
     end
 
