@@ -17,25 +17,10 @@ class ChatsController < ApplicationController
 
   # POST /applications/:application_token/chats
   def create
-    # Todo -> solve phantom record problem
-    app_chats = Chat.where(application_id: @application[:id])
-    number = app_chats.length + 1
-    new_chat = {
-      application_id: @application[:id],
-      number: number
-    }
-
-    @chat = Chat.new(new_chat)
-
-    if @chat.save
-      # Todo -> make chats_count updates at most every hour
-      @application.chats_count += 1
-      @application.save
-
-      render json: @chat, except:[:id], status: :created
-    else
-      render json: @chat.errors, status: :unprocessable_entity
-    end
+    max_num = Chat.where(application_id: @application[:id]).maximum("number")
+    number = max_num ? max_num + 1 : 1
+    ChatJob.perform_async(@application[:id], number)
+    render json: {number: number}, except:[:id], status: :created
   end
 
   # PATCH/PUT /applications/:application_token/chats/1
@@ -74,9 +59,11 @@ class ChatsController < ApplicationController
 
     # Set Application
     def set_application
-      @application = Application.find_by(token: params[:application_token])
-      if !@application
-        render plain: {error: "404 Application Not Found"}, status: 404
+      serialized_app = $redis.get(params[:application_token])
+      if !serialized_app
+        render json: {error: "404 Application Not Found"}, status: 404
+      else
+        @application = JSON.parse(serialized_app, {:symbolize_names => true})
       end
     end
 end
