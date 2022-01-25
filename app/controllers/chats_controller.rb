@@ -46,7 +46,7 @@ class ChatsController < ApplicationController
   def search
     unless params[:text].blank?
 
-      @results = Message.search(params[:text], params[:number])
+      @results = Message.search(params[:text], params[:chat_number])
       render json: @results
     end
   end

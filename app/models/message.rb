@@ -14,13 +14,14 @@ class Message < ApplicationRecord
                 match: { 
                   "chat_id": chat_id 
                 } 
-              },
-              { 
-                query_string: { 
-                  query: "*#{query}*", 
-                  fields: ['text'] 
-                } 
               }
+              # ,
+              # { 
+              #   query_string: { 
+              #     query: "*#{query}*", 
+              #     fields: ['text'] 
+              #   } 
+              # }
             ]
           }
         }
