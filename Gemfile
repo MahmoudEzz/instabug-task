@@ -19,6 +19,9 @@ gem 'redis-rack-cache'
 
 # Use sidekiq
 gem 'sidekiq'
+
+# Elastic Search
+gem 'elasticsearch-model'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

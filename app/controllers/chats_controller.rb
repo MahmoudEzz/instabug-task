@@ -43,6 +43,14 @@ class ChatsController < ApplicationController
     @chat.destroy
   end
 
+  def search
+    unless params[:text].blank?
+
+      @results = Message.search(params[:text], params[:number])
+      render json: @results
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_chat
