@@ -1,5 +1,5 @@
 class ApplicationsController < ApplicationController
-  before_action :set_application, only: [:show, :update]
+  before_action :set_application, only: [:show, :update, :destroy]
 
   # GET /applications
   def index
@@ -57,21 +57,19 @@ class ApplicationsController < ApplicationController
   # DELETE /applications/:token
   def destroy
     begin
-      application = Application.where(token: params[:token]).destroy_all
-      $redis.del(params[:token])
+      @application.destroy
+      $redis.del(@application[:token])
     rescue
-      render json: application, status: :unprocessable_entity
+      render json: {error: "Failed to delete chat"}, status: 400
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_application
-      serialized_app = $redis.get(params[:token])
-      if !serialized_app
+      @application = Application.find_by(token: params[:token])
+      if !@application
         render json: {error: "404 Application Not Found"}, status: 404
-      else
-        @application = JSON.parse(serialized_app, {:symbolize_names => true})
       end
     end
 
