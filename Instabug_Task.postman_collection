@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "7d56bc30-668a-41f0-9969-6b99fd3d2b5c",
+		"name": "InstaBug Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create application",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Chat\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/applications/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Hello",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Chat",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/WsMVDiRqVe4JGo9dVii8NmT2/chats",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"WsMVDiRqVe4JGo9dVii8NmT2",
+						"chats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Chat",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ/chats/5",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ",
+						"chats",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Chat",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"number\": 5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ/chats/6",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ",
+						"chats",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Chat",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"messages_count\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/applications/DbhRY8kgyAMs9CovUWJamp2b/chats/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"DbhRY8kgyAMs9CovUWJamp2b",
+						"chats",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read all application chats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ/chats/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ",
+						"chats",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read all application chat messages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ/chats/2/messages",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ",
+						"chats",
+						"2",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read application chat message",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ/chats/2/messages/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ",
+						"chats",
+						"2",
+						"messages",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete application chat message",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/DbhRY8kgyAMs9CovUWJamp2b/chats/2/messages/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"DbhRY8kgyAMs9CovUWJamp2b",
+						"chats",
+						"2",
+						"messages",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete application chat message Copy",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/DbhRY8kgyAMs9CovUWJamp2b/chats/2/messages/1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"DbhRY8kgyAMs9CovUWJamp2b",
+						"chats",
+						"2",
+						"messages",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create message",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"bad\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ/chats/2/messages",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ",
+						"chats",
+						"2",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Application",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Application",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Application",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"New Name\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/applications/DbhRY8kgyAMs9CovUWJamp2b",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"DbhRY8kgyAMs9CovUWJamp2b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read All Applications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Messages",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/applications/JtFgP6fio35P9w7Db1nJ8NpZ/chats/2/search?text=good",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"applications",
+						"JtFgP6fio35P9w7Db1nJ8NpZ",
+						"chats",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "text",
+							"value": "good"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
