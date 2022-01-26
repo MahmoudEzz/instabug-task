@@ -4,11 +4,11 @@ This project is to build a Chat Application API.
 
 The technologies used:
 
-● Ruby on Rails(V5) for building the API and the workers. 
-● MySQL as your main datastore. 
-● Sidekiq as queuing system.
-● REDIS for caching.
-● Elastic search.
+* Ruby on Rails(V5) for building the API and the workers. 
+* MySQL as your main datastore. 
+* Sidekiq as queuing system.
+* REDIS for caching.
+* Elastic search.
 
 
 ## Getting Started
