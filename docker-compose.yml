@@ -22,6 +22,7 @@ services:
     links:
       - db
       - redis
+      - es
     environment:
       REDIS_URL_SIDEKIQ: ${REDIS_URL_SIDEKIQ}
     env_file: .env
@@ -49,7 +50,7 @@ services:
     volumes: 
         - .:/app
     ports: 
-        - 3000:3000
+        - ${SERVER_PORT}:3000
     depends_on:
         - db
         - redis

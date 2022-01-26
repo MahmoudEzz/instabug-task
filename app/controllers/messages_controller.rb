@@ -5,9 +5,12 @@ class MessagesController < ApplicationController
 
   # GET /applications/:application_token/chats/:chat_number/messages
   def index
-    @messages = Message.where(chat_id: @chat[:id])
-
-    render json: @messages, except: [:id, :chat_id]
+    begin
+      @messages = Message.where(chat_id: @chat[:id])
+      render json: @messages, except: [:id, :chat_id]
+    rescue
+      render json: {error: "Failed to get application chat messages"}, status: 400
+    end
   end
 
   # GET /applications/:application_token/chats/:chat_number/messages/1
@@ -17,39 +20,49 @@ class MessagesController < ApplicationController
 
   # POST /applications/:application_token/chats/:chat_number/messages
   def create
-    if message_params[:text]
-    max_num = Message.where(chat_id: @chat[:id]).maximum("number")
-    number = max_num ? max_num + 1 : 1
-    new_message = {
-      chat_id: @chat[:id],
-      number: number,
-      text: message_params[:text]
-    }
-    MessageJob.perform_async(new_message);
-    render json: new_message, except: [:chat_id], status: :created
-    else
-      render json: {error: "Failed to create new message"}, status: :unprocessable_entity
+    begin
+      if message_params[:text]
+        max_num = Message.where(chat_id: @chat[:id]).maximum("number")
+        number = max_num ? max_num + 1 : 1
+        new_message = {
+          chat_id: @chat[:id],
+          number: number,
+          text: message_params[:text]
+        }
+        MessageJob.perform_async(new_message);
+        render json: new_message, except: [:chat_id], status: :created
+      end
+    rescue
+      render json: {error: "Failed to create new message"}, status: 400
     end
 
   end
 
   # PATCH/PUT /applications/:application_token/chats/:chat_number/messages/1
   def update
-    if Message.find_by(number: message_params[:number])
-      render json: {error: "This number already exists"}, status: :unprocessable_entity
-      return
-    end
-
-    if @message.update(message_params)
-      render json: @message, except: [:id, :chat_id]
-    else
-      render json: @message.errors, status: :unprocessable_entity
+    begin
+      if Message.find_by(number: message_params[:number])
+        render json: {error: "This number already exists"}, status: :unprocessable_entity
+        return
+      end
+  
+      if @message.update(message_params)
+        render json: @message, except: [:id, :chat_id]
+      else
+        render json: @message.errors, status: :unprocessable_entity
+      end
+    rescue
+      render json: {error: "Failed to update message"}, status: 400
     end
   end
 
   # DELETE /applications/:application_token/chats/:chat_number/messages/1
   def destroy
-    @message.destroy
+    begin
+      @message.destroy
+    rescue
+      render json: {error: "Failed to delete message"}, status: 400
+    end
   end
 
   private
@@ -64,16 +77,24 @@ class MessagesController < ApplicationController
     end
 
     def set_chat
-      @chat = Chat.find_by(number: params[:chat_number], application_id: @application[:id])
-      if !@chat
-        render json: {error: "404 Application Chat Not Found"}, status: 404
+      begin
+        @chat = Chat.find_by(number: params[:chat_number], application_id: @application[:id])
+        if !@chat
+          render json: {error: "404 Application Chat Not Found"}, status: 404
+        end
+      rescue
+        render json: {error: "Failed to get chat"}, status: 400
       end
     end
 
     def set_message
-      @message = Message.find_by(number: params[:number],chat_id: @chat[:id])
-      if !@message
-        render json: {error: "404 Application Chat Message Not Found"}, status: 404
+      begin
+        @message = Message.find_by(number: params[:number],chat_id: @chat[:id])
+        if !@message
+          render json: {error: "404 Application Chat Message Not Found"}, status: 404
+        end
+      rescue
+        render json: {error: "Failed to get message"}, status: 400
       end
     end
 
