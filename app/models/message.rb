@@ -1,5 +1,5 @@
 class Message < ApplicationRecord
-  belongs_to :chat
+  belongs_to :chat, counter_cache: true
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
